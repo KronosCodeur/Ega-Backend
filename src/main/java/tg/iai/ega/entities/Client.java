@@ -1,12 +1,13 @@
 package tg.iai.ega.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tg.iai.ega.enums.Gender;
+
+import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,5 +21,9 @@ public class Client {
     String lastName;
     String phone;
     String email;
+    Date birthday;
     String address;
+    Gender gender;
+    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL)
+    List<Account> accounts;
 }

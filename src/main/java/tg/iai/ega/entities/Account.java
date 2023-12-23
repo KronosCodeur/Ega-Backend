@@ -1,12 +1,12 @@
 package tg.iai.ega.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tg.iai.ega.enums.AccountType;
+
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor
@@ -17,5 +17,10 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String number;
-
+    Date dateCreation;
+    AccountType type;
+    double balance;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    Client client;
 }

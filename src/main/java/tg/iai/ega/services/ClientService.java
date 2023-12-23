@@ -22,17 +22,12 @@ public class ClientService implements  IClientService{
 
     @Override
     public Client getOneClient(Long id) {
+
         return clientRepository.findById(id).get();
     }
 
     @Override
     public void deleteClient(Long id) {
         clientRepository.deleteById(id);
-    }
-    public List<Client> findByName(String firstName,String lastName){
-        return  clientRepository.findAllByFirstNameOrLastName(firstName,lastName);
-    }
-    public List<Client> findByPhone(String phone){
-        return  clientRepository.findAllByPhone(phone);
     }
 }

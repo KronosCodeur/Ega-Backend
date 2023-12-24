@@ -2,6 +2,7 @@ package tg.iai.ega.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tg.iai.ega.dto.ClientDTO;
 import tg.iai.ega.entities.Client;
 import tg.iai.ega.repositories.ClientRepository;
 
@@ -16,7 +17,8 @@ public class ClientService implements  IClientService{
     }
 
     @Override
-    public Client saveClient(Client client) {
+    public Client saveClient(ClientDTO clientDTO) {
+        Client client = ClientDTO.toEntity(clientDTO);
         return clientRepository.save(client);
     }
 

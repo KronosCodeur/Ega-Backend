@@ -25,10 +25,7 @@ public class ClientController {
     public Client getOneClient(@PathVariable Long id){
         return  clientService.getOneClient(id);
     }
-    @GetMapping("/clients/info")
-    public Client get(@PathVariable Long id){
-        return  clientService.getOneClient(id);
-    }
+
     @DeleteMapping("/clients/{id}")
     public void deleteClient(@PathVariable Long id){
         clientService.deleteClient(id);

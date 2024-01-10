@@ -9,7 +9,7 @@ import tg.iai.ega.entities.Account;
 import tg.iai.ega.entities.Client;
 import tg.iai.ega.enums.Gender;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -22,8 +22,9 @@ public class ClientDTO {
     String lastName;
     String phone;
     String email;
-    Date birthday;
+    LocalDate birthday;
     String address;
+    String password;
     Gender gender;
     @JsonIgnore
     private List<Account> accounts;
@@ -38,6 +39,7 @@ public class ClientDTO {
         client.setEmail(clientDTO.getEmail());
         client.setAddress(clientDTO.getAddress());
         client.setBirthday(clientDTO.getBirthday());
+        client.setPassword(clientDTO.getPassword());
         client.setGender(clientDTO.getGender());
         client.setPhone(clientDTO.getPhone());
         return  client;

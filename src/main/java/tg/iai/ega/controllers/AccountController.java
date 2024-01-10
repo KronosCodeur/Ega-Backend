@@ -3,14 +3,12 @@ package tg.iai.ega.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tg.iai.ega.entities.Account;
-import tg.iai.ega.entities.Client;
 import tg.iai.ega.services.AccountService;
-import tg.iai.ega.services.ClientService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/ega/api/v1")
 public class AccountController {
 
     @Autowired

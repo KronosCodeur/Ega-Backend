@@ -2,6 +2,7 @@ package tg.iai.ega.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tg.iai.ega.dto.ClientDTO;
 import tg.iai.ega.entities.Client;
 import tg.iai.ega.services.ClientService;
 
@@ -18,8 +19,8 @@ public class ClientController {
         return  clientService.showAllClients();
     }
     @PostMapping("/clients")
-    public Client saveClient(@RequestBody Client client){
-        return  clientService.saveClient(client);
+    public Client saveClient(@RequestBody ClientDTO clientDTO){
+        return  clientService.saveClient(clientDTO);
     }
     @GetMapping("/clients/{id}")
     public Client getOneClient(@PathVariable Long id){
@@ -32,8 +33,8 @@ public class ClientController {
     }
 
     @PutMapping("/clients/{id}")
-    public  Client updateClient(@RequestBody Client client,@PathVariable Long id){
-        client.setId(id);
-        return clientService.saveClient(client);
+    public  Client updateClient(@RequestBody ClientDTO clientDTO,@PathVariable Long id){
+        clientDTO.setId(id);
+        return clientService.saveClient(clientDTO);
     }
 }

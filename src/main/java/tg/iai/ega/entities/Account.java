@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import tg.iai.ega.enums.AccountType;
-
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,10 +17,15 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String number;
-    Date dateCreation;
+    LocalDate dateCreation;
     AccountType type;
     double balance;
+    LocalDate creationDate;
     @ManyToOne
     @JoinColumn(name = "client_id")
     Client client;
+    @OneToMany(mappedBy = "account",cascade = CascadeType.ALL)
+    List<Operation> operations;
+    @OneToMany(mappedBy = "source",cascade =CascadeType.ALL )
+    List<Transfer> transfers;
 }

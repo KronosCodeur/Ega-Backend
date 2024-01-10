@@ -9,7 +9,7 @@ import tg.iai.ega.services.ClientService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/ega/api/v1")
 public class ClientController {
 
     @Autowired
@@ -18,10 +18,7 @@ public class ClientController {
     public List<Client> showAllClients(){
         return  clientService.showAllClients();
     }
-    @PostMapping("/clients")
-    public Client saveClient(@RequestBody ClientDTO clientDTO){
-        return  clientService.saveClient(clientDTO);
-    }
+
     @GetMapping("/clients/{id}")
     public Client getOneClient(@PathVariable Long id){
         return  clientService.getOneClient(id);
@@ -35,6 +32,6 @@ public class ClientController {
     @PutMapping("/clients/{id}")
     public  Client updateClient(@RequestBody ClientDTO clientDTO,@PathVariable Long id){
         clientDTO.setId(id);
-        return clientService.saveClient(clientDTO);
+        return clientService.UpdateClient(id,ClientDTO.toEntity(clientDTO));
     }
 }

@@ -1,6 +1,7 @@
 package tg.iai.ega.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tg.iai.ega.entities.Account;
 import tg.iai.ega.services.AccountService;
@@ -37,5 +38,25 @@ public class AccountController {
     @GetMapping("/accounts/{number}")
     public Account getAccountByNumber(@PathVariable String number){
         return accountService.getAccountByNumber(number);
+    }
+    @PostMapping("/deposit/{number}")
+    public ResponseEntity<String> effectuerDepot(@PathVariable String number, @RequestParam float montant) {
+        accountService.effectuerDepot(number, montant);
+        return ResponseEntity.ok("Dépôt effectué avec succès.");
+    }
+
+    @PostMapping("/withdrawal/{number}")
+    public ResponseEntity<String> effectuerRetrait(@PathVariable String number, @RequestParam float montant) {
+        accountService.effectuerRetrait(number, montant);
+        return ResponseEntity.ok("Retrait effectué avec succès.");
+    }
+
+    @PostMapping("/transfer")
+    public ResponseEntity<String> effectuerVirement(
+            @RequestParam String sourceNumber,
+            @RequestParam String destinationNumber,
+            @RequestParam float montant) {
+        accountService.effectuerVirement(sourceNumber, destinationNumber, montant);
+        return ResponseEntity.ok("Virement effectué avec succès.");
     }
 }

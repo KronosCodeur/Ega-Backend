@@ -38,4 +38,32 @@ public class AccountService implements  IAccountService{
     public void deleteAccount(Long id) {
         accountRepository.deleteById(id);
     }
+    public void effectuerDepot(String numeroCompte, float montant) {
+        Account account = accountRepository.getAccountByNumber(numeroCompte);
+        if (account != null) {
+            account.setBalance(account.getBalance() + montant);
+            accountRepository.save(account);
+        }
+    }
+
+    public void effectuerRetrait(String numeroCompte, float montant) {
+        Account account = accountRepository.getAccountByNumber(numeroCompte);
+        if (account != null && account.getBalance() >= montant) {
+            account.setBalance(account.getBalance() - montant);
+            accountRepository.save(account);
+        }
+    }
+
+    public void effectuerVirement(String sourceNumero, String destinationNumero, float montant) {
+        Account sourceAccount = accountRepository.getAccountByNumber(sourceNumero);
+        Account destinationAccount = accountRepository.getAccountByNumber(destinationNumero);
+
+        if (sourceAccount != null && destinationAccount != null && sourceAccount.getBalance() >= montant) {
+            sourceAccount.setBalance(sourceAccount.getBalance() - montant);
+            destinationAccount.setBalance(destinationAccount.getBalance() + montant);
+
+            accountRepository.save(sourceAccount);
+            accountRepository.save(destinationAccount);
+        }
+    }
 }

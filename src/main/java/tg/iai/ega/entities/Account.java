@@ -28,4 +28,15 @@ public class Account {
     List<Operation> operations;
     @OneToMany(mappedBy = "source",cascade =CascadeType.ALL )
     List<Transfer> transfers;
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void setNumber(String number) {
+        this.number=number;
+    }
 }

@@ -11,4 +11,7 @@ public interface IAccountService {
     Account getOneAccount(Long id);
     Account getAccountByNumber(String number);
     void deleteAccount(Long id);
+    void effectuerDepot(String numeroCompte, float montant);
+    void effectuerRetrait(String numeroCompte, float montant);
+    void effectuerVirement(String sourceNumero, String destinationNumero, float montant);
 }

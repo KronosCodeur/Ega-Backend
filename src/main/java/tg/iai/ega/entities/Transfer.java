@@ -1,4 +1,5 @@
 package tg.iai.ega.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,13 +13,15 @@ import java.time.LocalDateTime;
 public class Transfer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long Id;
+    private Long Id;
     @ManyToOne
     @JoinColumn(name = "destination")
-    Account destination;
+    @JsonIgnore
+    private Account destination;
     @ManyToOne
     @JoinColumn(name = "source")
-    Account source;
-    float amount;
-    LocalDateTime makedAt;
+    @JsonIgnore
+    private Account source;
+    private float amount;
+    private LocalDateTime makedAt;
 }

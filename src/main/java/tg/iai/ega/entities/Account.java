@@ -1,9 +1,8 @@
 package tg.iai.ega.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import tg.iai.ega.enums.AccountType;
 import java.time.LocalDate;
 import java.util.List;
@@ -12,27 +11,23 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Getter
+@Setter
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    String number;
-    LocalDate dateCreation;
-    AccountType type;
-    double balance;
-    LocalDate creationDate;
+    private Long id;
+    private String number;
+    private  LocalDate dateCreation;
+    private AccountType type;
+    private double balance;
     @ManyToOne
     @JoinColumn(name = "client_id")
-    Client client;
+    @JsonIgnore
+    private Client client;
     @OneToMany(mappedBy = "account",cascade = CascadeType.ALL)
-    List<Operation> operations;
+    private List<Operation> operations;
     @OneToMany(mappedBy = "source",cascade =CascadeType.ALL )
-    List<Transfer> transfers;
-    public double getBalance() {
-        return balance;
-    }
+    private List<Transfer> transfers;
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
 }

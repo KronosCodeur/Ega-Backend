@@ -5,5 +5,5 @@ import tg.iai.ega.entities.Account;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    Account getAccountByNumber(String number);
+    Account findAccountByNumber(String number);
 }

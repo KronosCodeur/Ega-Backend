@@ -9,6 +9,7 @@ import tg.iai.ega.services.ClientService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/ega/api/v1")
 public class ClientController {
 

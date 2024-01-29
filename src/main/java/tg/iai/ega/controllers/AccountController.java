@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/ega/api/v1")
 public class AccountController {
 

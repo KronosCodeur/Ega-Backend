@@ -10,8 +10,11 @@ import org.springframework.util.StringUtils;
 import tg.iai.ega.dto.AuthenticationRequest;
 import tg.iai.ega.dto.AuthenticationResponse;
 import tg.iai.ega.dto.RegisterRequest;
+import tg.iai.ega.dto.RegisterResponse;
 import tg.iai.ega.entities.Client;
 import tg.iai.ega.repositories.ClientRepository;
+
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,15 +32,24 @@ public class AuthenticationService {
         }
         UserDetails user1 = clientRepository.findClientByEmail(request.getEmail()).orElseThrow(() -> new EntityNotFoundException("aucun utilisateur n'est trouvé!"));
         if (!StringUtils.hasLength(user1.getUsername())) {
-            log.warn("le username de ce utilisateur est nul");
+            log.warn("l'email de ce utilisateur est null");
         }
+        Client client = clientRepository.findClientByEmail(request.getEmail()).get();
 
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .token(jwtToken).
+                id(client.getId()).
+                gender(client.getGender()).
+                firstName(client.getFirstName()).
+                lastName(client.getLastName()).
+                address(client.getAddress()).
+                email(client.getEmail()).
+                birthday(client.getBirthday()).
+                phone(client.getPhone())
                 .build();
     }
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public RegisterResponse register(RegisterRequest request) {
         var user = Client.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -50,9 +62,6 @@ public class AuthenticationService {
                 .nationality(request.getNationality())
                 .build();
         clientRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
+        return RegisterResponse.builder().message("Account successfully created !!!").build();
     }
 }

@@ -19,6 +19,7 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     @GetMapping("/accounts")
+
     public List<AccountOutputDto> showAllAccounts(){
         var accounts = accountService.showAllAccounts();
         List<AccountOutputDto> accountOutputDtoList = new ArrayList<>();
@@ -43,14 +44,14 @@ public class AccountController {
     public AccountOutputDto getAccountByNumber(@RequestParam String number){
         return new AccountOutputDto().entityToDto(accountService.getAccountByNumber(number));
     }
-    @PostMapping("/deposit/{number}")
-    public ResponseEntity<String> makeDeposit(@PathVariable String number, @RequestParam float amount) {
+    @PostMapping("/deposit")
+    public ResponseEntity<String> makeDeposit(@RequestParam String number, @RequestParam float amount) {
         accountService.makeDeposit(number, amount);
         return ResponseEntity.ok("Dépôt effectué avec succès.");
     }
 
-    @PostMapping("/withdrawal/{number}")
-    public ResponseEntity<String> makeWithdrawal(@PathVariable String number, @RequestParam float amount) {
+    @PostMapping("/withdrawal")
+    public ResponseEntity<String> makeWithdrawal(@RequestParam String number, @RequestParam float amount) {
         accountService.makeWithdrawal(number, amount);
         return ResponseEntity.ok("Retrait effectué avec succès.");
     }

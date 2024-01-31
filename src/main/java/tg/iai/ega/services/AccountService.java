@@ -60,7 +60,7 @@ public class AccountService implements  IAccountService{
     public void deleteAccount(Long id) {
         accountRepository.deleteById(id);
     }
-    public boolean makeDeposit(String accountNumber, float amount) {
+    public void makeDeposit(String accountNumber, float amount) {
 
         Account account = accountRepository.findAccountByNumber(accountNumber);
         if (account != null) {
@@ -72,12 +72,10 @@ public class AccountService implements  IAccountService{
             operation.setAmount(amount);
             operationRepository.save(operation);
             accountRepository.save(account);
-            return  true;
         }
-        return  false;
     }
 
-    public void makeWithdrawal(String accountNumber, float amount) {
+    public boolean makeWithdrawal(String accountNumber, float amount) {
         Account account = accountRepository.findAccountByNumber(accountNumber);
         if (account != null && account.getBalance() >= amount) {
             account.setBalance(account.getBalance() - amount);
@@ -88,10 +86,13 @@ public class AccountService implements  IAccountService{
             operation.setAmount(amount);
             operationRepository.save(operation);
             accountRepository.save(account);
+            return true;
+        }else {
+            return  false;
         }
     }
 
-    public void makeTransfer(String sourceAccountNumber, String destinationAccountNumber, float amount) {
+    public boolean makeTransfer(String sourceAccountNumber, String destinationAccountNumber, float amount) {
         Account sourceAccount = accountRepository.findAccountByNumber(sourceAccountNumber);
         Account destinationAccount = accountRepository.findAccountByNumber(destinationAccountNumber);
 
@@ -106,6 +107,9 @@ public class AccountService implements  IAccountService{
             transferRepository.save(transfer);
             accountRepository.save(sourceAccount);
             accountRepository.save(destinationAccount);
+            return true;
+        }else{
+            return  false;
         }
     }
 }

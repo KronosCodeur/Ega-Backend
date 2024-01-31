@@ -1,10 +1,10 @@
 package tg.iai.ega.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tg.iai.ega.dto.AccountDto;
 import tg.iai.ega.dto.AccountOutputDto;
+import tg.iai.ega.dto.TransactionResponse;
 import tg.iai.ega.entities.Account;
 import tg.iai.ega.services.AccountService;
 
@@ -44,24 +44,24 @@ public class AccountController {
     public AccountOutputDto getAccountByNumber(@RequestParam String number){
         return new AccountOutputDto().entityToDto(accountService.getAccountByNumber(number));
     }
-    @PostMapping("/deposit")
-    public ResponseEntity<String> makeDeposit(@RequestParam String number, @RequestParam float amount) {
+    @GetMapping("/deposit")
+    public TransactionResponse makeDeposit(@RequestParam String number, @RequestParam float amount) {
         accountService.makeDeposit(number, amount);
-        return ResponseEntity.ok("Dépôt effectué avec succès.");
+        return TransactionResponse.builder().success(true).message("Depot effectuer avec success").build();
     }
 
-    @PostMapping("/withdrawal")
-    public ResponseEntity<String> makeWithdrawal(@RequestParam String number, @RequestParam float amount) {
-        accountService.makeWithdrawal(number, amount);
-        return ResponseEntity.ok("Retrait effectué avec succès.");
+    @GetMapping("/withdrawal")
+    public TransactionResponse makeWithdrawal(@RequestParam String number, @RequestParam float amount) {
+        boolean result = accountService.makeWithdrawal(number, amount);
+        return TransactionResponse.builder().message(result?"Retrait effectué avec succès.":"Solde insuffissant").success(result).build();
     }
 
-    @PostMapping("/transfer")
-    public ResponseEntity<String> makeTransfer(
-            @RequestParam String sourceNumber,
-            @RequestParam String destinationNumber,
+    @GetMapping("/transfer")
+    public TransactionResponse makeTransfer(
+            @RequestParam String source,
+            @RequestParam String destination,
             @RequestParam float amount) {
-        accountService.makeTransfer(sourceNumber, destinationNumber, amount);
-        return ResponseEntity.ok("Virement effectué avec succès.");
+        var result = accountService.makeTransfer(source, destination, amount);
+        return TransactionResponse.builder().message(result?"Virement effectué avec succès.":"Solde insuffissant").success(result).build();
     }
 }
